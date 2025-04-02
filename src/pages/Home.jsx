@@ -1,6 +1,6 @@
 import React from 'react'
 import WhyUs from '../components/WhyUS/WhyUs'
-import SortingAlgorithmCard from '../components/Algorithm/Card/SortingAlgorithmCard'
+import SortingAlgorithmCard from '../components/Algorithm/SortingCardForHome/SortingAlgorithmCard'
 import Faq from '../components/FAQ/Faq'
 import HeroSection from '../components/Hero/HeroSection'
 

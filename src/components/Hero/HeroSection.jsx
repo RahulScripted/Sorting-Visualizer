@@ -4,7 +4,6 @@ const HeroSection = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center text-center gap-5">
       
-
         {/* Heading */}
         <h1 className="text-2xl md:text-5xl font-bold tracking-[3px]">
           Visualize

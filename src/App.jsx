@@ -5,6 +5,8 @@ import Home from "./pages/Home"
 import PrivacyPolicy from "./components/Policy/privacyPolicy"
 import TermsOfUse from "./components/Usecase/TermsOfUse"
 import BuyMeCoffee from "./components/BuyCoffee/BuyMeCoffee"
+import Sorting from "./components/Algorithm/Sorting/Sorting"
+import BubbleSort from "./components/Algorithm/BubbleSort/BubbleSort"
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/bubble-sort" element={<BubbleSort />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfUse />} />
       </Routes>
