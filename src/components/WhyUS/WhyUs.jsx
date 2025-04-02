@@ -51,7 +51,9 @@ const WhyUs = () => {
         {/* Cards */}
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 group'>
             {whyChoosingUs.map((item,idx) => (
-                <div key={idx} className='flex flex-col gap-2 bg-[#101010] p-5 md:p-7 cursor-pointer hover:scale-105 group-hover:opacity-70 hover:opacity-100 transition-all duration-500 rounded-md hover:shadow-xs hover:shadow-[#888]'>
+                <div key={idx} className='flex flex-col gap-2 bg-[#101010] p-5 md:p-7 cursor-pointer hover:scale-105 group-hover:opacity-70 hover:opacity-100 transition-all duration-500 rounded-md hover:shadow-xs hover:shadow-[#888] relative'>
+
+                    <div className='absolute top-1/2 -translate-y-1/2 left-0 w-1 h-20 bg-violet-500'></div>
 
                     {/* Icon */}
                     <div className='text-violet-500'>{item.icon}</div>
