@@ -10,8 +10,9 @@ const BubbleSort = () => {
             "Start from the first element and compare it with the next element.",
             "If the first element is greater than the second, swap them.",
             "Move to the next adjacent pair and repeat the process.",
-            "Continue comparing and swapping for the entire array. The largest element will bubble to its correct position at the end.",
-            "Ignore the last sorted element and repeat for the remaining unsorted part.",
+            "Continue comparing and swapping for the entire array.",
+            "The largest element will bubble to its correct position at the end.",
+            "Ignore the last sorted element and repeat for the remaining part.",
             "Repeat the process until no swaps are needed, meaning the array is sorted."
         ]}
     />

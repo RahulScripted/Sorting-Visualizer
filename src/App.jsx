@@ -7,6 +7,13 @@ import TermsOfUse from "./components/Usecase/TermsOfUse"
 import BuyMeCoffee from "./components/BuyCoffee/BuyMeCoffee"
 import Sorting from "./components/Algorithm/Sorting/Sorting"
 import BubbleSort from "./components/Algorithm/BubbleSort/BubbleSort"
+import SelectionSort from "./components/Algorithm/SelectionSort/SelectionSort"
+import InsertionSort from "./components/Algorithm/InsertionSort/InsertionSort"
+import MergeSort from "./components/Algorithm/MergeSort/MergeSort"
+import QuickSort from "./components/Algorithm/QuickSort/QuickSort"
+import HeapSort from "./components/Algorithm/HeapSort/HeapSort"
+import RadixSort from "./components/Algorithm/RadixSort/RadixSort"
+import CountingSort from "./components/Algorithm/CountingSort/CountingSort"
 
 
 function App() {
@@ -22,6 +29,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/bubble-sort" element={<BubbleSort />} />
+        <Route path="/selection-sort" element={<SelectionSort />} />
+        <Route path="/insertion-sort" element={<InsertionSort />} />
+        <Route path="/merge-sort" element={<MergeSort />} />
+        <Route path="/quick-sort" element={<QuickSort />} />
+        <Route path="/heap-sort" element={<HeapSort />} />
+        <Route path="/radix-sort" element={<RadixSort />} />
+        <Route path="/counting-sort" element={<CountingSort />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfUse />} />
       </Routes>
