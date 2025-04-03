@@ -1,5 +1,6 @@
 import { MoveRight, Play, Shuffle } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 
 // Generate according to screen size
@@ -14,13 +15,14 @@ const generateRandom = (count) => {
     return Array.from({ length: count }, () => Math.floor(Math.random() * 100) + 10);
 }
 
-const Sorting = ({title,description, working}) => {
+const Sorting = ({title,description, working, generateTimeComplexity, generateSpaceComplexity}) => {
   // Hooks
   const [barCount, setBarCount] = useState(getBarCount());
   const [bars, setBars] = useState(generateRandom(barCount));
+  const [isMobile, setIsMobile] = useState(false);
 
 
-  // Side Effect
+  // Side Effect -> Bar Generation
   useEffect(() => {
     const handleResize = () => {
         const newCount = getBarCount()
@@ -37,6 +39,22 @@ const Sorting = ({title,description, working}) => {
     setBars(generateRandom(barCount))
   };
 
+
+  // Side Effect -> For removing number in x axis
+  useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth < 640); // Adjust the width as needed
+    };
+
+    handleResize(); // Check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  // Get Time data
+  const timeData = generateTimeComplexity()
+  const spaceData = generateSpaceComplexity()
 
   return (
     <div className='flex flex-col gap-5'>
@@ -103,6 +121,86 @@ const Sorting = ({title,description, working}) => {
         </div>
 
         {/* 4th Part */}
+        <div className="w-full flex flex-col items-center justify-center mt-10">
+            
+            {/* Heading */}
+            <h1 className="bg-gradient-to-br from-violet-500 via-violet-300 to-violet-700 text-2xl md:text-3xl bg-clip-text text-transparent font-bold text-center">{title} Complexity Analysis</h1>
+
+            {/* Container for both visualizations */}
+            <div className='w-full mt-10 flex flex-col items-center justify-center lg:justify-between lg:flex-row gap-6'>
+
+                {/* Time Complexity */}
+                <div className='flex-1'>
+
+                    {/* Heading */}
+                    <h2 className="text-xl font-semibold text-center mb-4">Time Complexity</h2>
+
+                    {/* Graph Container */}
+                    <div className='h-72 sm:h-80 mb-4'>
+                        <ResponsiveContainer width="100%" height="100%" minWidth={300}>
+
+                            {/* Line chart */}
+                            <LineChart data={timeData}>
+
+                                {/* Cartesian */}
+                                <CartesianGrid strokeDasharray="3 3" />
+
+                                {/* X - axis */}
+                                <XAxis dataKey="n" label={{value: 'Input size (n)', position: 'insideBottom', offset: -5}} interval={0} hide={isMobile} />
+
+                                {/* Y - axis */}
+                                <YAxis label={{value: 'Operations', angle:-90, position: 'insideLeft'}} hide={isMobile} />
+
+                                {/* Tooltip */}
+                                <Tooltip />
+
+                                {/* Graph Line -> Worst Case */}
+                                <Line type="monotone" dataKey="worstCase" stroke='#EF4444' name='Worst Case (O(n²))' strokeWidth={2} />
+
+                                {/* Graph Line -> Average Case */}
+                                <Line type="monotone" dataKey="averageCase" stroke='#8B5CF6' name='Average Case (O(n²))' strokeWidth={2} />
+
+                                {/* Graph Line -> Best Case */}
+                                <Line type="monotone" dataKey="bestCase" stroke='#10B981' name='Best Case (O(n))' strokeWidth={2} />
+                            </LineChart>
+
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+                
+                {/* Space Complexity */}
+                <div className='flex-1'>
+
+                    {/* Heading */}
+                    <h2 className="text-xl font-semibold text-center mb-4">Space Complexity</h2>
+
+                    {/* Graph Container */}
+                    <div className='h-72 sm:h-80 mb-4'>
+                        <ResponsiveContainer width="100%" height="100%" minWidth={300}>
+
+                            {/* Line chart */}
+                            <LineChart data={spaceData}>
+
+                                {/* Cartesian */}
+                                <CartesianGrid strokeDasharray="3 3" />
+
+                                {/* X - axis */}
+                                <XAxis dataKey="n" label={{value: 'Input size (n)', position: 'insideBottom', offset: -5}} interval={0} hide={isMobile} />
+
+                                {/* Y - axis */}
+                                <YAxis label={{value: 'Operations', angle:-90, position: 'insideLeft'}} domain={[0, 'dataMax + 1']} hide={isMobile} />
+
+                                {/* Tooltip */}
+                                <Tooltip />
+
+                                {/* Graph Line -> Space Complexity */}
+                                <Line type="monotone" dataKey="complexity" stroke="#3B82F6" name="Space Complexity O(1)" strokeWidth={2}/>
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   )
 }

@@ -2,6 +2,37 @@ import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
 const QuickSort = () => {
+
+  // For time complexity
+  const generateTimeComplexity = () => {
+    const data = [];
+    for (let i = 1; i <= 20; i++) {
+      const worstCase = parseFloat((i * i).toFixed(2));
+      const averageCase = parseFloat((i * Math.log2(i)).toFixed(2));
+      const bestCase = parseFloat((i * Math.log2(i)).toFixed(2));
+
+      data.push({
+        n: i,
+        worstCase,
+        averageCase,
+        bestCase,
+      });
+    }
+    return data;
+  };
+
+  // For space complexity
+  const generateSpaceComplexity = () => {
+    const data = [];
+    for (let i = 1; i <= 20; i++) {
+      data.push({
+        n: i,
+        complexity: parseFloat((Math.log2(i)).toFixed(2)),
+      });
+    }
+    return data;
+  };
+
   return (
     <Sorting 
         title="Quick Sort"
@@ -12,6 +43,8 @@ const QuickSort = () => {
             "Recursively apply the same process to the left and right subarrays.",
             "Continue until the entire array is sorted."
         ]}
+        generateTimeComplexity={generateTimeComplexity}
+        generateSpaceComplexity={generateSpaceComplexity}
     />
   )
 }

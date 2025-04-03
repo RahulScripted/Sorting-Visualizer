@@ -2,6 +2,33 @@ import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
 const SelectionSort = () => {
+
+  // For time complexity
+  const generateTimeComplexity = () => {
+    const data = [];
+    for (let i = 1; i <= 20; i++) {
+      data.push({
+        n: i,
+        worstCase: i * i, 
+        averageCase: i * i,
+        bestCase: i * i,
+      });
+    }
+    return data;
+  };
+
+  // For space complexity
+  const generateSpaceComplexity = () => {
+    const data = [];
+    for (let i = 1; i <= 20; i++) {
+      data.push({
+        n: i,
+        complexity: 1,
+      });
+    }
+    return data;
+  };
+
   return (
     <Sorting 
         title="Selection Sort"
@@ -13,6 +40,8 @@ const SelectionSort = () => {
             "Repeat the process for the remaining unsorted portion.",
             "Continue until the entire array is sorted."
         ]}
+        generateTimeComplexity={generateTimeComplexity}
+        generateSpaceComplexity={generateSpaceComplexity}
     />
   )
 }

@@ -2,6 +2,33 @@ import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
 const CountingSort = () => {
+
+  // For time complexity
+  const generateTimeComplexity = () => {
+    const data = [];
+    for (let i = 1; i <= 20; i++) {
+      data.push({
+        n: i,
+        worstCase: i + 10,
+        averageCase: i + 10,
+        bestCase: i + 10,
+      });
+    }
+    return data;
+  };
+
+  // For space complexity
+  const generateSpaceComplexity = () => {
+    const data = [];
+    for (let i = 1; i <= 20; i++) {
+      data.push({
+        n: i,
+        complexity: i + 10, 
+      });
+    }
+    return data;
+  };
+
   return (
     <Sorting 
         title="Counting Sort"
@@ -13,6 +40,8 @@ const CountingSort = () => {
             "Build the output array by placing elements in their correct positions.",
             "Copy the sorted elements back to the original array."
         ]}
+        generateTimeComplexity = {generateTimeComplexity}
+        generateSpaceComplexity = {generateSpaceComplexity}
     />
   )
 }
