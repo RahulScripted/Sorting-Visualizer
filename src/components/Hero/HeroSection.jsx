@@ -18,7 +18,7 @@ const HeroSection = () => {
 
         {/* Paragraph */}
         <p className="w-full md:max-w-5xl text-sm md:text-base text-gray-300">
-          Explore, understand, and compare different sorting algorithms with real-time animations. Adjust speed, size, and see how each algorithm works step by step! Gain deeper insights with performance comparisons, visualize sorting complexities, and interact with customizable datasets to improve your understanding of algorithm efficiency!
+          Explore, understand, and compare different sorting algorithms with real-time animations. Adjust speed, size, and see how each algorithm works step by step! <span className="hidden sm:inline">Gain deeper insights with performance comparisons, visualize sorting complexities, and interact with customizable datasets to improve your understanding of algorithm efficiency!</span>
         </p>
     </div>
   );

@@ -369,7 +369,7 @@ const Sorting = ({
                     type="monotone"
                     dataKey="worstCase"
                     stroke="#EF4444"
-                    name="Worst Case (O(n²))"
+                    name="Worst Case"
                     strokeWidth={2}
                   />
 
@@ -378,7 +378,7 @@ const Sorting = ({
                     type="monotone"
                     dataKey="averageCase"
                     stroke="#8B5CF6"
-                    name="Average Case (O(n²))"
+                    name="Average Case"
                     strokeWidth={2}
                   />
 
@@ -387,7 +387,7 @@ const Sorting = ({
                     type="monotone"
                     dataKey="bestCase"
                     stroke="#10B981"
-                    name="Best Case (O(n))"
+                    name="Best Case"
                     strokeWidth={2}
                   />
                 </LineChart>
@@ -441,7 +441,7 @@ const Sorting = ({
                     type="monotone"
                     dataKey="complexity"
                     stroke="#3B82F6"
-                    name="Space Complexity O(1)"
+                    name="Space Complexity"
                     strokeWidth={2}
                   />
                 </LineChart>

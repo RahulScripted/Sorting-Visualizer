@@ -25,7 +25,7 @@ const Footer = () => {
           </Link>
         </div>
       </div>
-      <div className="mt-2 flex justify-center space-x-4 group">
+      <div className="mt-2 mb-[60px] md:mb-[20px] flex justify-center space-x-4 group">
         {/* GitHub Link */}
         <a
           href="https://github.com/RahulScripted"
