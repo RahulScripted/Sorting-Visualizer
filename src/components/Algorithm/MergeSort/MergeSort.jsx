@@ -1,6 +1,64 @@
 import React from "react";
 import Sorting from "../Sorting/Sorting";
 
+const mergeSort = async (arr, setBars, setComparing) => {
+  const mergeSortHelper = async (arr, left, right) => {
+    if (left < right) {
+      const mid = Math.floor((left + right) / 2);
+
+      await mergeSortHelper(arr, left, mid);
+      await mergeSortHelper(arr, mid + 1, right);
+      await merge(arr, left, mid, right);
+    }
+  };
+
+  const merge = async (arr, left, mid, right) => {
+    let leftArray = arr.slice(left, mid + 1);
+    let rightArray = arr.slice(mid + 1, right + 1);
+
+    let i = 0, j = 0, k = left;
+
+    while (i < leftArray.length && j < rightArray.length) {
+      setComparing([k]); // Highlight comparison
+
+      if (leftArray[i] <= rightArray[j]) {
+        arr[k] = leftArray[i];
+        i++;
+      } else {
+        arr[k] = rightArray[j];
+        j++;
+      }
+
+      setBars([...arr]);
+      await new Promise(resolve => setTimeout(resolve, 300));
+      k++;
+    }
+
+    while (i < leftArray.length) {
+      setComparing([k]);
+      arr[k] = leftArray[i];
+      setBars([...arr]);
+      await new Promise(resolve => setTimeout(resolve, 300));
+      i++;
+      k++;
+    }
+
+    while (j < rightArray.length) {
+      setComparing([k]);
+      arr[k] = rightArray[j];
+      setBars([...arr]);
+      await new Promise(resolve => setTimeout(resolve, 300));
+      j++;
+      k++;
+    }
+  };
+
+  let sortedArray = [...arr];
+  await mergeSortHelper(sortedArray, 0, sortedArray.length - 1);
+  setComparing([]);
+  return sortedArray;
+};
+
 const MergeSort = () => {
 
   // For time complexity
@@ -45,6 +103,7 @@ const MergeSort = () => {
         ]}
         generateTimeComplexity={generateTimeComplexity}
         generateSpaceComplexity={generateSpaceComplexity}
+        sortingAlgorithm={mergeSort}
     />
   );
 };

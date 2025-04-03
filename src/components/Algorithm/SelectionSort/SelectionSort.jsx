@@ -1,6 +1,33 @@
 import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
+
+const selectionSort = async (arr, setBars, setComparing) => {
+  let sortedArray = [...arr];
+
+  for (let i = 0; i < sortedArray.length - 1; i++) {
+    let minIndex = i;
+
+    for (let j = i + 1; j < sortedArray.length; j++) {
+      setComparing([i, j]);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      if (sortedArray[j] < sortedArray[minIndex]) {
+        minIndex = j;
+      }
+    }
+
+    if (minIndex !== i) {
+      [sortedArray[i], sortedArray[minIndex]] = [sortedArray[minIndex], sortedArray[i]];
+      setBars([...sortedArray]);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+  }
+
+  setComparing([]);
+  return sortedArray;
+};
+
 const SelectionSort = () => {
 
   // For time complexity
@@ -42,6 +69,7 @@ const SelectionSort = () => {
         ]}
         generateTimeComplexity={generateTimeComplexity}
         generateSpaceComplexity={generateSpaceComplexity}
+        sortingAlgorithm={selectionSort}
     />
   )
 }

@@ -1,11 +1,18 @@
 import { ArrowDownUp, BarChart, Filter, Layers, ListOrdered, Shuffle, SortAsc, SortDesc } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SortingAlgorithmCard = () => {
 
   // Hook -> Navigation
   const navigate = useNavigate()
+  const handleButtonClick = (path) => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+    navigate(path)
+  }
 
   // Sorting Algorithm - Data  
   const sortingAlgorithms = [
@@ -38,12 +45,6 @@ const SortingAlgorithmCard = () => {
         name: "Quick Sort", 
         description: "Picks a pivot, partitions the array into smaller subarrays, and sorts them recursively. One of the fastest sorting algorithms in practice.",
         path: "/quick-sort", 
-    },
-    { 
-        icon: <BarChart />,
-        name: "Heap Sort", 
-        description: "Uses a binary heap structure to repeatedly extract the largest element and place it at the end of the array. Efficient for large datasets.",
-        path: "/heap-sort", 
     },
     { 
         icon: <ListOrdered />, 
@@ -85,7 +86,7 @@ const SortingAlgorithmCard = () => {
                 <p className="text-sm text-gray-300">{item.description}</p>
 
                 {/* Button */}
-                <button onClick={() => navigate(item.path)} className="mt-3 cursor-pointer relative overflow-hidden rounded-md bg-gradient-to-r from-violet-300 via-violet-700 to-violet-300 hove:bg-gradient-to-r hover:from-violet-700 hover:via-violet-300 hover:to-violet-700 hover:drop-shadow-2xl px-5 py-2.5 text-white font-bold transition-all duration-300 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:-translate-y-1 active:scale-x-90 active:scale-y-110">
+                <button onClick={() => handleButtonClick(item.path)} className="mt-3 cursor-pointer relative overflow-hidden rounded-md bg-gradient-to-r from-violet-300 via-violet-700 to-violet-300 hove:bg-gradient-to-r hover:from-violet-700 hover:via-violet-300 hover:to-violet-700 hover:drop-shadow-2xl px-5 py-2.5 text-white font-bold transition-all duration-300 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:-translate-y-1 active:scale-x-90 active:scale-y-110">
                     Visualize
                 </button>
             </div>

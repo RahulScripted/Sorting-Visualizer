@@ -1,6 +1,27 @@
 import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
+const bubbleSort = async (arr, setBars, setComparing) => {
+  let n = arr.length;
+  let sortedArray = [...arr];
+
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      setComparing([j, j + 1]);
+      
+      if (sortedArray[j] > sortedArray[j + 1]) {
+        [sortedArray[j], sortedArray[j + 1]] = [sortedArray[j + 1], sortedArray[j]];
+        setBars([...sortedArray]);
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+    }
+  }
+
+  setComparing([]);
+  return sortedArray;
+};
+
+
 const BubbleSort = () => {
 
   // For time complexity
@@ -44,6 +65,7 @@ const BubbleSort = () => {
         ]}
         generateTimeComplexity = {generateTimeComplexity}
         generateSpaceComplexity = {generateSpaceComplexity}
+        sortingAlgorithm={bubbleSort}
     />
   )
 }

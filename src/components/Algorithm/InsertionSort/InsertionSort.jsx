@@ -1,6 +1,32 @@
 import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
+
+const insertionSort = async (arr, setBars, setComparing) => {
+  let sortedArray = [...arr];
+
+  for (let i = 1; i < sortedArray.length; i++) {
+    let key = sortedArray[i];
+    let j = i - 1;
+
+    while (j >= 0 && sortedArray[j] > key) {
+      setComparing([j, j + 1]);
+      sortedArray[j + 1] = sortedArray[j];
+      setBars([...sortedArray]);
+      await new Promise(resolve => setTimeout(resolve, 300));
+      j--;
+    }
+
+    sortedArray[j + 1] = key;
+    setBars([...sortedArray]);
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }
+
+  setComparing([]);
+  return sortedArray;
+};
+
+
 const InsertionSort = () => {
 
   // For time complexity
@@ -42,6 +68,7 @@ const InsertionSort = () => {
         ]}
         generateTimeComplexity = {generateTimeComplexity}
         generateSpaceComplexity = {generateSpaceComplexity}
+        sortingAlgorithm={insertionSort}
     />
   )
 }

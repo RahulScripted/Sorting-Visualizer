@@ -1,6 +1,36 @@
 import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
+const countingSort = async (arr, setBars, setComparing) => {
+  let max = Math.max(...arr);
+  let min = Math.min(...arr);
+  let range = max - min + 1;
+  let count = Array(range).fill(0);
+  let output = Array(arr.length).fill(0);
+
+  // Count occurrences
+  for (let num of arr) {
+    count[num - min]++;
+  }
+
+  // Cumulative sum
+  for (let i = 1; i < range; i++) {
+    count[i] += count[i - 1];
+  }
+
+  // Build sorted output
+  for (let i = arr.length - 1; i >= 0; i--) {
+    let num = arr[i];
+    output[count[num - min] - 1] = num;
+    count[num - min]--;
+    setBars([...output]);
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }
+
+  setComparing([]);
+  return output;
+};
+
 const CountingSort = () => {
 
   // For time complexity
@@ -42,6 +72,7 @@ const CountingSort = () => {
         ]}
         generateTimeComplexity = {generateTimeComplexity}
         generateSpaceComplexity = {generateSpaceComplexity}
+        sortingAlgorithm={countingSort}
     />
   )
 }

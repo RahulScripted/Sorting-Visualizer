@@ -1,6 +1,42 @@
 import React from 'react'
 import Sorting from '../Sorting/Sorting'
 
+const quickSort = async (arr, setBars, setComparing) => {
+  const quickSortHelper = async (arr, low, high) => {
+    if (low < high) {
+      let pivotIndex = await partition(arr, low, high);
+      await quickSortHelper(arr, low, pivotIndex - 1);
+      await quickSortHelper(arr, pivotIndex + 1, high);
+    }
+  };
+
+  const partition = async (arr, low, high) => {
+    let pivot = arr[high]; // Choosing the last element as pivot
+    let i = low - 1;
+
+    for (let j = low; j < high; j++) {
+      setComparing([j, high]); // Highlight comparison
+      if (arr[j] < pivot) {
+        i++;
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+        setBars([...arr]);
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+    }
+
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]; // Move pivot to the correct position
+    setBars([...arr]);
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    return i + 1;
+  };
+
+  let sortedArray = [...arr];
+  await quickSortHelper(sortedArray, 0, sortedArray.length - 1);
+  setComparing([]);
+  return sortedArray;
+};
+
 const QuickSort = () => {
 
   // For time complexity
@@ -45,6 +81,7 @@ const QuickSort = () => {
         ]}
         generateTimeComplexity={generateTimeComplexity}
         generateSpaceComplexity={generateSpaceComplexity}
+        sortingAlgorithm={quickSort}
     />
   )
 }
