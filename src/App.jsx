@@ -14,23 +14,29 @@ import QuickSort from "./components/Algorithm/QuickSort/QuickSort";
 import RadixSort from "./components/Algorithm/RadixSort/RadixSort";
 import CountingSort from "./components/Algorithm/CountingSort/CountingSort";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import PreLoader from "./components/Preloader/PreLoader";
+import PageTransition from "./pages/PageTransactions";
+import gsap from "gsap";
 
 function App() {
   // Hooks
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 5000);
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const contentRef = useRef()
+
+
+  const handlePreloaderComplete = () => {
+    setLoading(true);
+  };
 
   return (
     <div className="relative flex flex-col gap-20 bg-black text-white w-full min-h-screen p-5 sm:p-7 md:p-10">
       {/* For Preloading */}
-      {loading ? (
-        <PreLoader />
+      {!loading ? (
+        <PreLoader onComplete={handlePreloaderComplete} />
       ) : (
         <>
+          <PageTransition contentRef={contentRef} />
           <div className="fixed z-10 bottom-5 left-5">
             <BuyMeCoffee />
           </div>

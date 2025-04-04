@@ -13,6 +13,7 @@ import {
 
 // Generate according to screen size
 const getBarCount = () => {
+  if(window.innerWidth >1024) return 25;
   if (window.innerWidth > 768) return 20;
   if (window.innerWidth > 480) return 10;
   else return 5;
