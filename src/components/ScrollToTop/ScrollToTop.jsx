@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 const ScrollToTop = () => {
@@ -12,7 +11,7 @@ const ScrollToTop = () => {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollTop / scrollHeight) * 100;
       setScrollProgress(progress);
-      setIsVisible(scrollTop > 100); // Show button when scrolled down
+      setIsVisible(scrollTop > 100); 
     };
 
     window.addEventListener("scroll", updateScrollProgress);
@@ -26,12 +25,9 @@ const ScrollToTop = () => {
   return (
     <div className="fixed bottom-5 right-5 z-99">
       {isVisible && (
-        <motion.button
+        <button
           onClick={scrollToTop}
           className="relative w-12 h-12 rounded-full bg-violet-600 flex items-center justify-center shadow-lg cursor-pointer"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
         >
           <svg className="absolute w-full h-full" viewBox="0 0 36 36">
             <path
@@ -53,7 +49,7 @@ const ScrollToTop = () => {
             />
           </svg>
           <ArrowUp className="text-white w-5 h-5" />
-        </motion.button>
+        </button>
       )}
     </div>
   );
