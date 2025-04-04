@@ -7,6 +7,8 @@ import Faq from '../components/FAQ/Faq'
 import HeroSection from '../components/Hero/HeroSection'
 import ComparisonBetweenAlgorithm from '../components/Comparison/ComparisonBetweenAlgorithm'
 
+import EnableAds from '../components/AdS/EnableAds'
+
 
 const Home = () => {
 
@@ -17,6 +19,7 @@ const Home = () => {
       <SortingAlgorithmCard />
       <ComparisonBetweenAlgorithm />
       <Faq />
+      <EnableAds />
     </div>
   )
 }
