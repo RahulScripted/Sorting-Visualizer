@@ -10,10 +10,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // Generate according to screen size
 const getBarCount = () => {
-  if(window.innerWidth >1024) return 25;
+  if (window.innerWidth > 1024) return 25;
   if (window.innerWidth > 768) return 20;
   if (window.innerWidth > 480) return 10;
   else return 5;
@@ -34,6 +36,7 @@ const Sorting = ({
   generateTimeComplexity,
   generateSpaceComplexity,
   sortingAlgorithm,
+  codeSnippets,
 }) => {
   // Hooks
   const [barCount, setBarCount] = useState(getBarCount());
@@ -44,7 +47,8 @@ const Sorting = ({
   const [swapping, setSwapping] = useState([]);
   const [sorted, setSorted] = useState([]);
   const [currentPivot, setCurrentPivot] = useState(null);
-  const [animationSpeed, setAnimationSpeed] = useState(50); // Default animation speed
+  const [animationSpeed, setAnimationSpeed] = useState(50);
+  const [selectLanguage, setSelectLanguage] = useState("cpp");
 
   // Side Effect -> Bar Generation
   useEffect(() => {
@@ -65,21 +69,21 @@ const Sorting = ({
       // Create a visual shuffle effect
       setSorting(true);
       const newBars = [...bars];
-      
+
       // Fisher-Yates shuffle with animation
       for (let i = newBars.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         setSwapping([i, j]);
-        await new Promise(resolve => setTimeout(resolve, animationSpeed));
-        
+        await new Promise((resolve) => setTimeout(resolve, animationSpeed));
+
         // Swap
         [newBars[i], newBars[j]] = [newBars[j], newBars[i]];
         setBars([...newBars]);
-        
-        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+
+        await new Promise((resolve) => setTimeout(resolve, animationSpeed));
         setSwapping([]);
       }
-      
+
       setSorted([]);
       setSorting(false);
       setBars(newBars);
@@ -102,58 +106,67 @@ const Sorting = ({
     if (!sorting) {
       setSorting(true);
       setSorted([]);
-      
+
       // Wrap the sorting algorithm to add visual enhancements
-      const enhancedSortingAlgorithm = async (array, updateBars, updateComparing) => {
+      const enhancedSortingAlgorithm = async (
+        array,
+        updateBars,
+        updateComparing
+      ) => {
         // Create enhanced setter functions that include visual effects
         const enhancedSetBars = (newBars) => {
           updateBars(newBars);
-          return new Promise(resolve => setTimeout(resolve, animationSpeed));
+          return new Promise((resolve) => setTimeout(resolve, animationSpeed));
         };
-        
+
         const enhancedSetComparing = (indices) => {
           updateComparing(indices);
-          return new Promise(resolve => setTimeout(resolve, animationSpeed));
+          return new Promise((resolve) => setTimeout(resolve, animationSpeed));
         };
-        
+
         // Add ability to set pivot (for quicksort) and mark sorted elements
         const setPivot = (index) => {
           setCurrentPivot(index);
-          return new Promise(resolve => setTimeout(resolve, animationSpeed));
+          return new Promise((resolve) => setTimeout(resolve, animationSpeed));
         };
-        
+
         const markSorted = (indices) => {
-          setSorted(prev => {
-            const newSorted = [...prev, ...indices.filter(idx => !prev.includes(idx))];
+          setSorted((prev) => {
+            const newSorted = [
+              ...prev,
+              ...indices.filter((idx) => !prev.includes(idx)),
+            ];
             return newSorted;
           });
-          return new Promise(resolve => setTimeout(resolve, animationSpeed * 2));
+          return new Promise((resolve) =>
+            setTimeout(resolve, animationSpeed * 2)
+          );
         };
-        
+
         const setSwap = (indices) => {
           setSwapping(indices);
-          return new Promise(resolve => setTimeout(resolve, animationSpeed));
+          return new Promise((resolve) => setTimeout(resolve, animationSpeed));
         };
-        
+
         return await sortingAlgorithm(
-          [...array], 
-          enhancedSetBars, 
-          enhancedSetComparing, 
+          [...array],
+          enhancedSetBars,
+          enhancedSetComparing,
           {
             setPivot,
             markSorted,
             setSwap,
-            animationSpeed
+            animationSpeed,
           }
         );
       };
-      
+
       const sortedBars = await enhancedSortingAlgorithm(
         [...bars],
         setBars,
         setComparing
       );
-      
+
       // Mark all as sorted when complete
       const allIndices = Array.from({ length: sortedBars.length }, (_, i) => i);
       setSorted(allIndices);
@@ -161,16 +174,18 @@ const Sorting = ({
       setSwapping([]);
       setCurrentPivot(null);
       setBars(sortedBars);
-      
+
       // Celebratory animation when sorting is complete
       const celebrateSort = async () => {
         for (let i = 0; i < sortedBars.length; i++) {
           setComparing([i]);
-          await new Promise(resolve => setTimeout(resolve, animationSpeed / 2));
+          await new Promise((resolve) =>
+            setTimeout(resolve, animationSpeed / 2)
+          );
         }
         setComparing([]);
       };
-      
+
       await celebrateSort();
       setSorting(false);
     }
@@ -186,7 +201,7 @@ const Sorting = ({
     if (swapping.includes(index)) return "bg-yellow-500"; // Being swapped
     if (currentPivot === index) return "bg-blue-500"; // Pivot element
     if (sorted.includes(index)) return "bg-green-500"; // Already sorted
-    
+
     // Default color with gradient based on value
     const intensity = Math.floor((value / 100) * 255);
     return `bg-violet-500`;
@@ -195,7 +210,7 @@ const Sorting = ({
   // For calculating animations
   const getBarStyle = (index, value) => {
     const style = { height: `${value * 3}px` };
-    
+
     // Add animations
     if (swapping.includes(index)) {
       style.transform = "scale(1.1)";
@@ -207,7 +222,7 @@ const Sorting = ({
       style.transform = "scale(1.05)";
       style.transition = "all 0.3s ease";
     }
-    
+
     return style;
   };
 
@@ -254,17 +269,24 @@ const Sorting = ({
           {bars.map((value, idx) => (
             <div
               key={idx}
-              className={`w-[30px] sm:w-[40px] md:w-[50px] flex items-end justify-center text-white text-sm font-bold pb-5 rounded-md transition-all duration-300 ${getBarColor(idx, value)}`}
+              className={`w-[30px] sm:w-[40px] md:w-[50px] flex items-end justify-center text-white text-sm font-bold pb-5 rounded-md transition-all duration-300 ${getBarColor(
+                idx,
+                value
+              )}`}
               style={getBarStyle(idx, value)}
             >
               {value}
             </div>
           ))}
-          
+
           {/* Status indicator */}
           {sorting && (
             <div className="absolute top-4 left-4 bg-black bg-opacity-70 px-3 py-1 rounded-md text-white text-sm">
-              {comparing.length > 0 ? "Comparing" : swapping.length > 0 ? "Swapping" : "Processing..."}
+              {comparing.length > 0
+                ? "Comparing"
+                : swapping.length > 0
+                ? "Swapping"
+                : "Processing..."}
             </div>
           )}
         </div>
@@ -281,7 +303,13 @@ const Sorting = ({
             className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
             disabled={sorting}
           />
-          <span className="text-xs text-gray-300">{animationSpeed < 50 ? "Fast" : animationSpeed > 120 ? "Slow" : "Normal"}</span>
+          <span className="text-xs text-gray-300">
+            {animationSpeed < 50
+              ? "Fast"
+              : animationSpeed > 120
+              ? "Slow"
+              : "Normal"}
+          </span>
         </div>
 
         {/* For Buttons */}
@@ -291,8 +319,8 @@ const Sorting = ({
             onClick={shuffleBars}
             disabled={sorting}
             className={`flex items-center justify-center gap-2 px-10 py-2 md:py-4 rounded-md ${
-              sorting 
-                ? "bg-gray-600 cursor-not-allowed" 
+              sorting
+                ? "bg-gray-600 cursor-not-allowed"
                 : "bg-violet-500 cursor-pointer border border-transparent hover:bg-transparent hover:border-violet-500 hover:scale-90"
             } transition-all duration-300`}
           >
@@ -305,8 +333,8 @@ const Sorting = ({
             onClick={startSorting}
             disabled={sorting}
             className={`flex items-center justify-center gap-2 px-10 py-2 md:py-4 rounded-md ${
-              sorting 
-                ? "border border-gray-600 cursor-not-allowed" 
+              sorting
+                ? "border border-gray-600 cursor-not-allowed"
                 : "border border-violet-500 cursor-pointer hover:bg-violet-500 hover:scale-90"
             } transition-all duration-300`}
           >
@@ -450,6 +478,45 @@ const Sorting = ({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* 5th Part */}
+      <div className="w-full mt-10">
+        {/* Heading */}
+        <h1 className="bg-gradient-to-br from-violet-500 via-violet-300 to-violet-700 text-4xl bg-clip-text text-transparent font-bold text-center h-auto md:h-[70px] ">
+          {title} Code
+        </h1>
+
+        {/* Language Tabs */}
+        <div className="flex mb-4 gap-4">
+          {Object.keys(codeSnippets).map((lang) => (
+            <button
+              key={lang}
+              onClick={() => setSelectLanguage(lang)}
+              className={`px-4 py-2 rounded-md text-sm font-semibold cursor-pointer ${
+                selectLanguage === lang
+                  ? "bg-violet-500 text-white"
+                  : "bg-transparent hover:bg-violet-500 transition-all duration-300 text-gray-300"
+              }`}
+            >
+              {lang.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
+        {/* Code */}
+        <SyntaxHighlighter
+          language={selectLanguage}
+          style={dracula}
+          wrapLongLines={true}
+          customStyle={{
+            borderRadius: "0.75rem",
+            padding: "1rem",
+            backgroundColor: "#1e1e1e",
+          }}
+        >
+          {codeSnippets[selectLanguage].trim()}
+        </SyntaxHighlighter>
       </div>
     </div>
   );

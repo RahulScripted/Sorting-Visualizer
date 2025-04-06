@@ -56,6 +56,56 @@ const SelectionSort = () => {
     return data;
   };
 
+  const codeSnippets = {
+    cpp: `
+void selectionSort(int arr[], int n) {
+      for (int i = 0; i < n - 1; i++) {
+            int minIdx = i;
+            for (int j = i + 1; j < n; j++) {
+                  if (arr[j] < arr[minIdx]) minIdx = j;
+            }
+            swap(arr[i], arr[minIdx]);
+      }
+}
+    `,
+    java: `
+void selectionSort(int[] arr) {
+      int n = arr.length;
+      for (int i = 0; i < n - 1; i++) {
+            int minIdx = i;
+            for (int j = i + 1; j < n; j++) {
+                  if (arr[j] < arr[minIdx]) minIdx = j;
+            }
+
+            int temp = arr[minIdx];
+            arr[minIdx] = arr[i];
+            arr[i] = temp;
+      }
+}
+    `,
+    python: `
+def selection_sort(arr):
+      for i in range(len(arr)):
+          min_idx = i
+          for j in range(i + 1, len(arr)):
+              if arr[j] < arr[min_idx]:
+                  min_idx = j
+          arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    `,
+    javascript: `
+function selectionSort(arr) {
+      for (let i = 0; i < arr.length - 1; i++) {
+            let minIdx = i;
+            for (let j = i + 1; j < arr.length; j++) {
+                  if (arr[j] < arr[minIdx]) minIdx = j;
+            }
+          [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+      }
+      return arr;
+}
+    `,
+  };
+
   return (
     <Sorting 
         title="Selection Sort"
@@ -70,6 +120,7 @@ const SelectionSort = () => {
         generateTimeComplexity={generateTimeComplexity}
         generateSpaceComplexity={generateSpaceComplexity}
         sortingAlgorithm={selectionSort}
+        codeSnippets={codeSnippets}
     />
   )
 }

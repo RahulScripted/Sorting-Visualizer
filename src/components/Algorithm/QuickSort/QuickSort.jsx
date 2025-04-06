@@ -69,6 +69,82 @@ const QuickSort = () => {
     return data;
   };
 
+  const codeSnippets = {
+    cpp: `
+int partition(int arr[], int low, int high) {
+        int pivot = arr[high];
+        int i = (low - 1);
+        for (int j = low; j <= high - 1; j++) {
+              if (arr[j] < pivot) {
+                    i++;
+                    std::swap(arr[i], arr[j]);
+              }
+        }
+        swap(arr[i + 1], arr[high]);
+        return (i + 1);
+}
+
+
+void quickSort(int arr[], int low, int high) {
+        if (low < high) {
+              int pi = partition(arr, low, high);
+              quickSort(arr, low, pi - 1);
+              quickSort(arr, pi + 1, high);
+        }
+}
+    `,
+    java: `
+int partition(int arr[], int low, int high) {
+        int pivot = arr[high];
+        int i = (low - 1);
+        for (int j = low; j < high; j++) {
+              if (arr[j] < pivot) {
+                    i++;
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+              }
+        }
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+        return i + 1;
+}
+
+void quickSort(int arr[], int low, int high) {
+      if (low < high) {
+          int pi = partition(arr, low, high);
+          quickSort(arr, low, pi - 1);
+          quickSort(arr, pi + 1, high);
+      }
+}
+    `,
+    python: `
+def quick_sort(arr):
+        if len(arr) <= 1:
+          return arr
+        
+        pivot = arr[-1]
+        left = [x for x in arr[:-1] if x < pivot]
+        right = [x for x in arr[:-1] if x >= pivot]
+        return quick_sort(left) + [pivot] + quick_sort(right)
+    `,
+    javascript: `
+function quickSort(arr) {
+        if (arr.length <= 1) return arr;
+        let pivot = arr[arr.length - 1];
+        let left = [];
+        let right = [];
+
+        for (let i = 0; i < arr.length - 1; i++) {
+              if (arr[i] < pivot) left.push(arr[i]);
+              else right.push(arr[i]);
+        }
+        return [...quickSort(left), pivot, ...quickSort(right)];
+}
+    `,
+  };
+
   return (
     <Sorting 
         title="Quick Sort"
@@ -82,6 +158,7 @@ const QuickSort = () => {
         generateTimeComplexity={generateTimeComplexity}
         generateSpaceComplexity={generateSpaceComplexity}
         sortingAlgorithm={quickSort}
+        codeSnippets={codeSnippets}
     />
   )
 }
