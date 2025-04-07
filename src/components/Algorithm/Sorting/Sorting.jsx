@@ -488,7 +488,7 @@ const Sorting = ({
         </h1>
 
         {/* Language Tabs */}
-        <div className="flex mb-4 gap-4">
+        <div className="mt-10 flex mb-4 gap-4">
           {Object.keys(codeSnippets).map((lang) => (
             <button
               key={lang}
